@@ -13,14 +13,14 @@ export default class Layer {
 
 
     }
-    update(direction, gameSpeed) {
+    update(direction, gameProperties) {
         if (this.position.x < -this.gameSize.width) {
             this.position.x = 0;
         }
         if (this.position.x > this.gameSize.width) {
             this.position.x = 0;
         }
-        this.position.x += this.velocity.x * direction * gameSpeed
+        this.position.x += this.velocity.x * direction * gameProperties.speed * gameProperties.backgroundSpeed
 
     }
     draw(ctx) {
@@ -28,9 +28,4 @@ export default class Layer {
         ctx.drawImage(this.image, this.position.x - this.gameSize.width, this.position.y, this.gameSize.width, this.gameSize.height);
         ctx.drawImage(this.image, this.position.x + this.gameSize.width, this.position.y, this.gameSize.width, this.gameSize.height);
     }
-}
-export class BackGroundLayer extends Layer {
-    constructor(image, velocity) {
-        super(image, velocity)
-    };
 }

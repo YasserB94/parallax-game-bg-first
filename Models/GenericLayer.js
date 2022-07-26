@@ -1,9 +1,11 @@
 import Layer from "./Layer.js";
-import { GAME_BACKGROUND_LAYER_AMOUNT } from "./Game.js";
 
-export default class Background {
-    constructor(images, gameSize, gameProperties) {
-        this.backgroundLayers = [];
+
+export default class GenericLayer {
+    constructor(images, gameSize, gameProperties, parallax) {
+        this.parallax = parallax;
+        this.layers = [];
+        this.layerAmount = images.length;
         this.gameSize = gameSize;
         this.gameProperties = gameProperties
         this.init(images);
@@ -16,15 +18,18 @@ export default class Background {
         this.createLayers(images);
     }
     createLayers(images) {
-        //TODO - MAKE VELOCITY MODULAR TO FPS OF GAME
         let velocity = {
-            x: (this.gameProperties.speed / GAME_BACKGROUND_LAYER_AMOUNT),
+            x: 1,
             y: 0
+        };
+        if (this.parallax) {
+            velocity.x = (this.gameProperties.speed / this.layerAmount)
         }
+
         images.forEach(image => {
             const tmpLayer = new Layer(image, velocity, this.gameSize)
-            this.backgroundLayers.push(tmpLayer)
-            velocity.x = velocity.x + (this.gameProperties.speed / GAME_BACKGROUND_LAYER_AMOUNT)
+            this.layers.push(tmpLayer)
+            if (this.parallax) velocity.x = velocity.x + (this.gameProperties.speed / this.layerAmount)
         });
     }
     update(controls, playerBoundaries) {
@@ -33,12 +38,12 @@ export default class Background {
     }
     updateLayers() {
         if (!this.state.moving) return;
-        this.backgroundLayers.forEach(layer => {
-            layer.update(this.state.directionX, this.gameProperties.speed);
+        this.layers.forEach(layer => {
+            layer.update(this.state.directionX, this.gameProperties);
         })
     }
     draw(ctx) {
-        this.backgroundLayers.forEach(layer => {
+        this.layers.forEach(layer => {
             layer.draw(ctx)
         })
     }

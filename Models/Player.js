@@ -22,7 +22,7 @@ export default class Player {
             rightBoundaryHit: false
         }
         this.properties = {
-            speed: 10
+            speed: this.gameSize.width / 20
         }
     }
     update(controls) {
@@ -82,5 +82,8 @@ export default class Player {
             left: this.boundaries.leftBoundaryHit,
             right: this.boundaries.rightBoundaryHit
         }
+    }
+    getVelocity() {
+        return this.velocity;
     }
 }
