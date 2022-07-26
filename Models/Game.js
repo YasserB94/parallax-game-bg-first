@@ -13,7 +13,7 @@ export default class Game {
         }
         this.properties = {
             fps: FPS,
-            speed: 1
+            speed: 2
         }
         this.init()
     }
@@ -29,7 +29,7 @@ export default class Game {
 
     }
     draw() {
-        this.ctx.fillStyle = 'white';
+        this.ctx.fillStyle = 'cyan';
         this.ctx.fillRect(0, 0, this.size.width, this.size.height)
         this.background.draw(this.ctx)
         this.player.draw(this.ctx)
