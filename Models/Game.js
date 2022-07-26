@@ -15,7 +15,9 @@ export default class Game {
             fps: FPS,
             speed: .5,
             movementSpeed: 1,
-            backgroundSpeed: 1
+            backgroundSpeed: 1,
+            groundMargin: 0,
+            gravity: 1
         }
         this.init()
     }
