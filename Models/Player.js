@@ -16,8 +16,8 @@ export default class Player {
             y: 0
         }
         this.boundaries = {
-            leftBoundaryPosition: this.gameSize.width / 10,
-            rightBoundaryPosition: this.gameSize.width / 2,
+            leftBoundaryPosition: this.size.width / 2,
+            rightBoundaryPosition: this.gameSize.width - (this.size.width * 1.5),
             leftBoundaryHit: false,
             rightBoundaryHit: false
         }
