@@ -9,11 +9,11 @@ export default class Layer {
         }
 
     }
-    update() {
-
+    update(direction) {
+        console.log(this.velocity.x * direction)
+        this.position.x += this.velocity.x * direction
     }
     draw(ctx) {
-
         ctx.drawImage(this.image, this.position.x, this.position.y, this.gameSize.width, this.gameSize.height);
     }
 }

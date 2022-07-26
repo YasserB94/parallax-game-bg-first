@@ -6,7 +6,8 @@ export default class Player {
             height: 200
         }
         this.position = {
-            x: 0,
+            //Start player just outside of left boundary
+            x: (this.gameSize.width / 10) + 1,
             y: 0
         }
         this.velocity = {
