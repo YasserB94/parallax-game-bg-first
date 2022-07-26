@@ -20,14 +20,17 @@ export default class Game {
         this.backgroundImages = [];
         this.getBackgroundImages();
         this.player = new Player(this.size);
-        this.background = new Background(this.backgroundImages)
+        this.background = new Background(this.backgroundImages, this.size)
     }
     update() {
+        this.background.update(this.inputHandler.getControls(), this.player.getBoundaries())
         this.player.update(this.inputHandler.getControls())
+
     }
     draw() {
         this.ctx.fillStyle = 'white';
         this.ctx.fillRect(0, 0, this.size.width, this.size.height)
+        this.background.draw(this.ctx)
         this.player.draw(this.ctx)
     }
     getBackgroundImages() {
