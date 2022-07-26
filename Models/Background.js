@@ -1,5 +1,5 @@
 import Layer from "./Layer.js";
-
+import { GAME_BACKGROUND_LAYER_AMOUNT } from "./Game.js";
 
 export default class Background {
     constructor(images, gameSize, gameProperties) {
@@ -18,13 +18,13 @@ export default class Background {
     createLayers(images) {
         //TODO - MAKE VELOCITY MODULAR TO FPS OF GAME
         let velocity = {
-            x: .1,
+            x: (this.gameProperties.speed / GAME_BACKGROUND_LAYER_AMOUNT),
             y: 0
         }
         images.forEach(image => {
             const tmpLayer = new Layer(image, velocity, this.gameSize)
             this.backgroundLayers.push(tmpLayer)
-            velocity.x = velocity.x * 2
+            velocity.x = velocity.x + (this.gameProperties.speed / GAME_BACKGROUND_LAYER_AMOUNT)
         });
     }
     update(controls, playerBoundaries) {

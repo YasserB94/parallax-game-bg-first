@@ -1,6 +1,7 @@
 export default class Player {
-    constructor(gameSize) {
+    constructor(gameSize, gameProperties) {
         this.gameSize = gameSize;
+        this.gameProperties = gameProperties;
         this.size = {
             width: 200,
             height: 200
@@ -19,6 +20,9 @@ export default class Player {
             rightBoundaryPosition: this.gameSize.width / 2,
             leftBoundaryHit: false,
             rightBoundaryHit: false
+        }
+        this.properties = {
+            speed: 10
         }
     }
     update(controls) {
@@ -39,7 +43,7 @@ export default class Player {
         }
     }
     updatePosition() {
-        this.position.x += this.velocity.x
+        this.position.x += this.velocity.x * this.properties.speed
         this.position.y += this.velocity.y
         this.velocity.x = 0;
         this.velocity.y = 0;
@@ -61,12 +65,12 @@ export default class Player {
                 }
                 if (key === "left" && value === true) {
                     if (this.boundaries.leftBoundaryHit) return;
-                    this.velocity.x = -50;
+                    this.velocity.x = -this.gameProperties.speed;
                     continue;
                 }
                 if (key === "right" && value === true) {
                     if (this.boundaries.rightBoundaryHit) return;
-                    this.velocity.x = 50;
+                    this.velocity.x = this.gameProperties.speed;
                     continue;
                 }
             }

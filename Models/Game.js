@@ -2,7 +2,7 @@
 import InputHandler from "./InputHandler.js";
 import Player from "./Player.js";
 import Background from "./Background.js";
-const GAME_BACKGROUND_LAYER_AMOUNT = 8;
+export const GAME_BACKGROUND_LAYER_AMOUNT = 8;
 export default class Game {
     constructor(canvas, FPS) {
         this.ctx = canvas.getContext("2d");
@@ -13,14 +13,14 @@ export default class Game {
         }
         this.properties = {
             fps: FPS,
-            speed: 2
+            speed: 6
         }
         this.init()
     }
     init() {
         this.backgroundImages = [];
         this.getBackgroundImages();
-        this.player = new Player(this.size);
+        this.player = new Player(this.size, this.properties);
         this.background = new Background(this.backgroundImages, this.size, this.properties)
     }
     update() {

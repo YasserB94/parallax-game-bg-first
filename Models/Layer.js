@@ -14,7 +14,6 @@ export default class Layer {
 
     }
     update(direction, gameSpeed) {
-        console.log(this.velocity.x)
         if (this.position.x < -this.gameSize.width) {
             this.position.x = 0;
         }
