@@ -13,11 +13,29 @@ export default class Player {
             x: 0,
             y: 0
         }
+        this.boundaries = {
+            leftBoundaryPosition: this.gameSize.width / 10,
+            rightBoundaryPosition: this.gameSize.width / 2,
+            leftBoundaryHit: false,
+            rightBoundaryHit: false
+        }
     }
     update(controls) {
         this.handleInput(controls);
-
+        this.updateBoundaries();
         this.updatePosition();
+    }
+    updateBoundaries() {
+        if (this.position.x <= this.boundaries.leftBoundaryPosition) {
+            this.boundaries.leftBoundaryHit = true;
+        } else {
+            this.boundaries.leftBoundaryHit = false;
+        }
+        if (this.position.x >= this.boundaries.rightBoundaryPosition) {
+            this.boundaries.rightBoundaryHit = true;
+        } else {
+            this.boundaries.rightBoundaryHit = false;
+        }
     }
     updatePosition() {
         this.position.x += this.velocity.x
@@ -29,6 +47,7 @@ export default class Player {
         ctx.fillStyle = 'red';
         ctx.fillRect(this.position.x, this.position.y, this.size.width, this.size.height)
     }
+
     handleInput(controls) {
         for (const key in controls) {
             if (Object.hasOwnProperty.call(controls, key)) {
@@ -40,14 +59,23 @@ export default class Player {
                     continue;
                 }
                 if (key === "left" && value === true) {
+                    if (this.boundaries.leftBoundaryHit) return;
                     this.velocity.x = -1;
                     continue;
                 }
                 if (key === "right" && value === true) {
+                    if (this.boundaries.rightBoundaryHit) return;
                     this.velocity.x = 1;
                     continue;
                 }
             }
+        }
+
+    }
+    getBoundaries() {
+        return {
+            left: this.boundaries.leftBoundaryHit,
+            right: this.boundaries.rightBoundaryHit
         }
     }
 }
