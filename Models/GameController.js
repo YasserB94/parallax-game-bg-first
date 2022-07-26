@@ -1,8 +1,6 @@
-import InputHandler from "./InputHandler.js";
 import Game from "./Game.js";
 export default class GameController {
     constructor(canvas) {
-        this.InputHandler = new InputHandler();
         this.fps = 60;
         this.game = new Game(canvas, this.InputHandler, this.fps);
         this.startGameLoop();
