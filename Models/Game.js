@@ -12,7 +12,8 @@ export default class Game {
             height: canvas.height
         }
         this.properties = {
-            fps: FPS
+            fps: FPS,
+            speed: 1
         }
         this.init()
     }
@@ -20,7 +21,7 @@ export default class Game {
         this.backgroundImages = [];
         this.getBackgroundImages();
         this.player = new Player(this.size);
-        this.background = new Background(this.backgroundImages, this.size)
+        this.background = new Background(this.backgroundImages, this.size, this.properties)
     }
     update() {
         this.background.update(this.inputHandler.getControls(), this.player.getBoundaries())

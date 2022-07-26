@@ -2,9 +2,10 @@ import Layer from "./Layer.js";
 
 
 export default class Background {
-    constructor(images, gameSize) {
+    constructor(images, gameSize, gameProperties) {
         this.backgroundLayers = [];
         this.gameSize = gameSize;
+        this.gameProperties = gameProperties
         this.init(images);
         this.state = {
             moving: false,
@@ -17,7 +18,7 @@ export default class Background {
     createLayers(images) {
         //TODO - MAKE VELOCITY MODULAR TO FPS OF GAME
         let velocity = {
-            x: 0.2,
+            x: .1,
             y: 0
         }
         images.forEach(image => {
@@ -33,7 +34,7 @@ export default class Background {
     updateLayers() {
         if (!this.state.moving) return;
         this.backgroundLayers.forEach(layer => {
-            layer.update(this.state.directionX);
+            layer.update(this.state.directionX, this.gameProperties.speed);
         })
     }
     draw(ctx) {

@@ -61,12 +61,12 @@ export default class Player {
                 }
                 if (key === "left" && value === true) {
                     if (this.boundaries.leftBoundaryHit) return;
-                    this.velocity.x = -5;
+                    this.velocity.x = -50;
                     continue;
                 }
                 if (key === "right" && value === true) {
                     if (this.boundaries.rightBoundaryHit) return;
-                    this.velocity.x = 5;
+                    this.velocity.x = 50;
                     continue;
                 }
             }
