@@ -13,9 +13,9 @@ export default class Game {
         }
         this.properties = {
             fps: FPS,
-            speed: .5,
+            speed: 1,
             movementSpeed: 1,
-            backgroundSpeed: 1,
+            backgroundSpeed: 'hi',
             groundMargin: 100,
             gravity: 1
         }

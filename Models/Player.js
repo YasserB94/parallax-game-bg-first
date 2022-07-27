@@ -4,8 +4,8 @@ export default class Player {
         this.gameSize = gameSize;
         this.gameProperties = gameProperties;
         this.size = {
-            width: 200,
-            height: 200
+            width: 100,
+            height: 100
         }
         this.position = {
             //Start player just outside of left boundary
@@ -24,8 +24,9 @@ export default class Player {
             bottomBoundaryPosition: this.gameSize.height - this.size.height
         }
         this.properties = {
-            speed: this.gameSize.width / 20,
-            weight: 10
+            speed: this.gameProperties.speed,
+            weight: 10,
+            jumpStrength: 0
         }
         this.states = {
             airborn: false
@@ -51,9 +52,11 @@ export default class Player {
         }
     }
     updatePosition() {
-        this.position.x += this.velocity.x * this.properties.speed
+        console.log(this.properties.speed)
+        this.position.x += this.velocity.x + (this.velocity.x * this.properties.speed)
         this.position.y += this.velocity.y
         this.velocity.x = 0;
+
     }
     draw(ctx) {
         ctx.fillStyle = 'red';
@@ -81,12 +84,12 @@ export default class Player {
                 }
                 if (key === "left" && value === true) {
                     if (this.boundaries.leftBoundaryHit) return;
-                    this.velocity.x = -this.gameProperties.speed;
+                    this.velocity.x = -this.size.width / 4;
                     continue;
                 }
                 if (key === "right" && value === true) {
                     if (this.boundaries.rightBoundaryHit) return;
-                    this.velocity.x = this.gameProperties.speed;
+                    this.velocity.x = this.size.width / 4;
                     continue;
                 }
             }
@@ -104,8 +107,7 @@ export default class Player {
     }
     jump() {
         if (this.states.airborn) return;
-        this.velocity.y -= (this.size.height / 3)
-        //  - (this.properties.weight * this.gameProperties.gravity * this.gameProperties.speed);
+        this.velocity.y -= this.gameSize.height / (10 - this.properties.jumpStrength)
     }
     updateStates() {
         this.updateAirborn()
