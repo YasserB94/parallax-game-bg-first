@@ -1,5 +1,6 @@
 export default class Player {
-    constructor(gameSize, gameProperties) {
+    constructor(gameSize, gameProperties, spriteSheet) {
+        this.spriteSheet = spriteSheet
         this.gameSize = gameSize;
         this.gameProperties = gameProperties;
         this.size = {
@@ -9,7 +10,7 @@ export default class Player {
         this.position = {
             //Start player just outside of left boundary
             x: (this.gameSize.width / 10) + 1,
-            y: 0
+            y: this.gameSize.height - this.size.height - this.gameProperties.groundMargin
         }
         this.velocity = {
             x: 0,
@@ -24,17 +25,17 @@ export default class Player {
         }
         this.properties = {
             speed: this.gameSize.width / 20,
-            weight: 1
+            weight: 10
         }
         this.states = {
             airborn: false
         }
     }
     update(controls) {
-        this.applyGravity()
-        this.handleInput(controls);
         this.updateStates();
+        this.applyGravity()
         this.updateBoundaries();
+        this.handleInput(controls);
         this.updatePosition();
     }
     updateBoundaries() {
@@ -51,9 +52,7 @@ export default class Player {
     }
     updatePosition() {
         this.position.x += this.velocity.x * this.properties.speed
-        if ((this.position.y += this.velocity.y) > this.gameSize.height) {
-            this.position.y += this.velocity.y
-        }
+        this.position.y += this.velocity.y
         this.velocity.x = 0;
     }
     draw(ctx) {
@@ -72,7 +71,9 @@ export default class Player {
             if (Object.hasOwnProperty.call(controls, key)) {
                 const value = controls[key];
                 if (key === "up" && value === true) {
-                    this.velocity.y = -20;
+                    if (!this.states.airborn) {
+                        this.jump();
+                    };
                     continue;
                 }
                 if (key === "down" && value === true) {
@@ -101,11 +102,16 @@ export default class Player {
     getVelocity() {
         return this.velocity;
     }
+    jump() {
+        if (this.states.airborn) return;
+        this.velocity.y -= (this.size.height / 3)
+        //  - (this.properties.weight * this.gameProperties.gravity * this.gameProperties.speed);
+    }
     updateStates() {
         this.updateAirborn()
     }
     updateAirborn() {
-        if (this.position.y + this.size.height >= this.gameSize.height) {
+        if (this.position.y + this.size.height >= this.gameSize.height - this.gameProperties.groundMargin) {
             this.states.airborn = false
         } else {
             this.states.airborn = true

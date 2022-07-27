@@ -16,16 +16,16 @@ export default class Game {
             speed: .5,
             movementSpeed: 1,
             backgroundSpeed: 1,
-            groundMargin: 0,
+            groundMargin: 100,
             gravity: 1
         }
         this.init()
     }
     init() {
-        this.backgroundImages = [];
-        this.getBackgroundImages();
+        const backgroundImages = this.getBackgroundImages();;
+        this.background = new GenericLayer(backgroundImages, this.size, this.properties, true)
+        const playerSpriteSheet = document.getElementById('game_player_sprite_sheet');
         this.player = new Player(this.size, this.properties);
-        this.background = new GenericLayer(this.backgroundImages, this.size, this.properties, true)
     }
     update() {
         this.properties.backgroundSpeed = this.player.size.width / 3
@@ -40,10 +40,12 @@ export default class Game {
         this.player.draw(this.ctx)
     }
     getBackgroundImages() {
+        let images = []
         for (let i = 1; i <= GAME_BACKGROUND_LAYER_AMOUNT; i++) {
             const img = document.getElementById('game_bg_img_layer_' + i);
-            this.backgroundImages.push(img)
+            images.push(img)
         }
+        return images;
 
     }
 }
